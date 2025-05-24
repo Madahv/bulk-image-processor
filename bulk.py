@@ -17,7 +17,7 @@ st.set_page_config(layout="wide")
 def clean_filename(name):
     return re.sub(r'[\/*?<>|":]', "_", name)
 
-st.title("🖼️ Bulk Image Processor with Resize, Quality & ZIP Download")
+st.title("fabricdiary")
 
 with st.sidebar:
     st.header("⚙️ Global Settings")
