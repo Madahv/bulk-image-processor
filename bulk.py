@@ -5,6 +5,13 @@ import zipfile
 import os
 import re
 
+# Add HEIC support
+try:
+    import pillow_heif
+    pillow_heif.register_heif_opener()
+except ImportError:
+    st.warning("HEIC images require `pillow-heif`. Install with: pip install pillow-heif")
+
 st.set_page_config(layout="wide")
 
 def clean_filename(name):
@@ -40,7 +47,12 @@ if uploaded_files:
         base_name, ext = os.path.splitext(safe_name)
         default_name = f"{base_name}_fd.jpg"
 
-        image = Image.open(uploaded_file)
+        try:
+            image = Image.open(uploaded_file)
+        except Exception as e:
+            st.error(f"Failed to open {uploaded_file.name}: {e}")
+            continue
+
         if image.mode == 'RGBA':
             image = image.convert('RGB')
 
