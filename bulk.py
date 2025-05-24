@@ -5,13 +5,6 @@ import zipfile
 import os
 import re
 
-# Add HEIC support
-try:
-    import pillow_heif
-    pillow_heif.register_heif_opener()
-except ImportError:
-    st.warning("HEIC images require `pillow-heif`. Install with: pip install pillow-heif")
-
 st.set_page_config(layout="wide")
 
 def clean_filename(name):
@@ -30,7 +23,7 @@ col_upload, col_download = st.columns([3, 1])
 with col_upload:
     uploaded_files = st.file_uploader(
         "Upload Images (drag & drop supported)",
-        type=["jpg", "jpeg", "png", "heic"],
+        type=["jpg", "jpeg", "png"],  # removed 'heic'
         accept_multiple_files=True,
         label_visibility="collapsed"
     )
@@ -66,7 +59,7 @@ if uploaded_files:
         img_col, control_col = st.columns([3, 1])
 
         with img_col:
-            st.image(image, caption=f"Preview: {safe_name}", use_column_width=False, width=250)
+            st.image(image, caption=f"Preview: {safe_name}", use_container_width=False, width=250)
 
         with control_col:
             custom_name_input = st.text_input(
