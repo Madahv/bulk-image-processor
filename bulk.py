@@ -75,12 +75,21 @@ if uploaded_files:
             image.save(img_bytes, format='JPEG', quality=jpeg_quality)
             img_bytes.seek(0)
 
+            # st.download_button(
+            #     label="⬇️ Download",
+            #     data=img_bytes,
+            #     file_name=user_output_name,
+            #     mime="image/jpeg"
+            # )
+
             st.download_button(
-                label="⬇️ Download",
-                data=img_bytes,
-                file_name=user_output_name,
-                mime="image/jpeg"
-            )
+    label="⬇️ Download",
+    data=img_bytes,
+    file_name=user_output_name,
+    mime="image/jpeg",
+    key=f"download_btn_{index}"  # 🔑 Unique key per image
+)
+
 
         processed_images.append((user_output_name, image, img_bytes))
 
